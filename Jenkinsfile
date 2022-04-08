@@ -28,7 +28,7 @@ pipeline {
 
         stage('Build Docker image'){
             steps {
-                sh 'docker build -t anvbhaskar/docker_jenkins_pipeline:${BUILD_NUMBER} .'
+                sh 'docker build -t kkvkdc/docker_jenkins_pipeline:${BUILD_NUMBER} .'
             }
         }
 
@@ -36,20 +36,20 @@ pipeline {
             
             steps {
                  withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
-                    sh "docker login -u anvbhaskar -p ${Dockerpwd}"
+                    sh "docker login -u kkvkdc -p ${Pass123@9090}"
                 }
             }                
         }
 
         stage('Docker Push'){
             steps {
-                sh 'docker push anvbhaskar/docker_jenkins_pipeline:${BUILD_NUMBER}'
+                sh 'docker push kkvkdc/docker_jenkins_pipeline:${BUILD_NUMBER}'
             }
         }
         
         stage('Docker deploy'){
             steps {
-                sh 'docker run -itd -p 8081:8080 anvbhaskar/springboot:0.0.3'
+                sh 'docker run -itd -p 3000:3000 kkvkdc/springboot:0.0.3'
             }
         }
 
