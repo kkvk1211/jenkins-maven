@@ -36,7 +36,7 @@ pipeline {
             
             steps {
                  withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
-                    sh "docker login -u kkvkdc -p ${Pass123@9090}"
+                    sh "docker login -u kkvkdc -p ${PASSWORD}"
                 }
             }                
         }
