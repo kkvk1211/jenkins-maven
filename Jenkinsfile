@@ -24,10 +24,11 @@ pipeline {
                 sh "mvn package"
             }
         }
-   
-    stage('Build Docker image'){
+
+
+        stage('Build Docker image'){
             steps {
-                sh 'docker build -t pass123a/docker_jenkins_pipeline:${BUILD_NUMBER} .'
+                sh 'docker build -t anvbhaskar/docker_jenkins_pipeline:${BUILD_NUMBER} .'
             }
         }
 
@@ -35,20 +36,20 @@ pipeline {
             
             steps {
                  withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
-                    sh "docker login -u pass123a -p ${Pass@123a}"
+                    sh "docker login -u anvbhaskar -p ${Dockerpwd}"
                 }
             }                
         }
 
         stage('Docker Push'){
             steps {
-                sh 'docker push pass123a/docker_jenkins_pipeline:${BUILD_NUMBER}'
+                sh 'docker push anvbhaskar/docker_jenkins_pipeline:${BUILD_NUMBER}'
             }
         }
         
         stage('Docker deploy'){
             steps {
-                sh 'docker run -itd -p 3000:3000 pass123a/springboot:0.0.3'
+                sh 'docker run -itd -p 8081:8080 anvbhaskar/springboot:0.0.3'
             }
         }
 
@@ -58,7 +59,5 @@ pipeline {
                  archiveArtifacts '**/target/*.jar'
             }
         }
-    
     }
-   
 }
